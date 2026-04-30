@@ -104,9 +104,7 @@
               <img src="assets/logos/epicurious.png" alt="" width="26" height="26" loading="eager" decoding="async" />
               <img src="assets/logos/bonappetit.png" alt="" width="26" height="26" loading="eager" decoding="async" />
             </span>
-            <span class="proof-pill__text">
-              Trusted recipe sites, matched to what’s in your fridge
-            </span>
+            <span class="proof-pill__text">Recipes from trusted sites</span>
           </div>
 
           <h1 class="hero__title" data-reveal data-reveal-delay="80">
@@ -132,7 +130,10 @@
         </div>
 
         <div class="hero__visual">
-          <img class="hero__phone" src="hero.png" alt="Chefcam.ai app showing daily calorie summary and recent meal scans" data-reveal data-reveal-delay="120" />
+          <!-- Wrapper carries transform animation so mix-blend-mode on the img isn’t broken on iOS Safari -->
+          <div class="hero__phone-wrap">
+            <img class="hero__phone" src="hero.png" alt="Chefcam.ai app showing daily calorie summary and recent meal scans" />
+          </div>
         </div>
       </div>
     </section>

@@ -56,18 +56,11 @@
     }
   }
 
-  /* ----- How it works: horizontal snap + dots ---------------------------- */
+  /* ----- How it works: horizontal snap + dots (manual swipe / dots only) -- */
   const howDots = document.querySelectorAll('.how__dot');
-  const howSection = document.getElementById('how');
-  const AUTO_ADVANCE_MS = 6000;
-  const PROGRAMMATIC_SCROLL_SETTLE_MS = reduceMotion ? 80 : 520;
 
   if (howStrip && howDots.length) {
     const slides = howStrip.querySelectorAll('.how__step');
-    let programmaticScroll = false;
-    let autoAdvanceTimer = null;
-    let howSectionVisible = false;
-    let scrollUserDebounce = null;
 
     const getActiveIndex = () => {
       const mid = howStrip.scrollLeft + howStrip.clientWidth / 2;
@@ -103,34 +96,6 @@
       });
     };
 
-    const clearAutoAdvance = () => {
-      if (autoAdvanceTimer !== null) {
-        clearTimeout(autoAdvanceTimer);
-        autoAdvanceTimer = null;
-      }
-    };
-
-    const scheduleAutoAdvance = () => {
-      clearAutoAdvance();
-      if (reduceMotion || !howSectionVisible || document.hidden) return;
-      autoAdvanceTimer = setTimeout(() => {
-        autoAdvanceTimer = null;
-        const i = getActiveIndex();
-        const next = (i + 1) % slides.length;
-        programmaticScroll = true;
-        goToStep(next);
-        setTimeout(() => {
-          programmaticScroll = false;
-          scheduleAutoAdvance();
-        }, PROGRAMMATIC_SCROLL_SETTLE_MS);
-      }, AUTO_ADVANCE_MS);
-    };
-
-    const userInteracted = () => {
-      clearAutoAdvance();
-      scheduleAutoAdvance();
-    };
-
     let scrollQueued = false;
     howStrip.addEventListener(
       'scroll',
@@ -140,10 +105,6 @@
         requestAnimationFrame(() => {
           scrollQueued = false;
           setActiveDot(getActiveIndex());
-          if (!programmaticScroll) {
-            clearTimeout(scrollUserDebounce);
-            scrollUserDebounce = setTimeout(() => userInteracted(), 140);
-          }
         });
       },
       { passive: true }
@@ -152,12 +113,7 @@
     howDots.forEach((dot) => {
       dot.addEventListener('click', () => {
         const i = parseInt(dot.dataset.howStep || '0', 10);
-        userInteracted();
-        programmaticScroll = true;
         goToStep(i);
-        setTimeout(() => {
-          programmaticScroll = false;
-        }, PROGRAMMATIC_SCROLL_SETTLE_MS);
       });
     });
 
@@ -165,45 +121,8 @@
       if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft') return;
       e.preventDefault();
       const i = getActiveIndex();
-      if (e.key === 'ArrowRight' && i < slides.length - 1) {
-        userInteracted();
-        programmaticScroll = true;
-        goToStep(i + 1);
-        setTimeout(() => {
-          programmaticScroll = false;
-        }, PROGRAMMATIC_SCROLL_SETTLE_MS);
-      }
-      if (e.key === 'ArrowLeft' && i > 0) {
-        userInteracted();
-        programmaticScroll = true;
-        goToStep(i - 1);
-        setTimeout(() => {
-          programmaticScroll = false;
-        }, PROGRAMMATIC_SCROLL_SETTLE_MS);
-      }
-    });
-
-    if (howSection && 'IntersectionObserver' in window && !reduceMotion) {
-      const ioHowSection = new IntersectionObserver(
-        (entries) => {
-          howSectionVisible = Boolean(entries[0]?.isIntersecting);
-          if (howSectionVisible) {
-            scheduleAutoAdvance();
-          } else {
-            clearAutoAdvance();
-          }
-        },
-        { threshold: 0.32 }
-      );
-      ioHowSection.observe(howSection);
-    }
-
-    document.addEventListener('visibilitychange', () => {
-      if (document.hidden) {
-        clearAutoAdvance();
-      } else if (howSectionVisible && !reduceMotion) {
-        scheduleAutoAdvance();
-      }
+      if (e.key === 'ArrowRight' && i < slides.length - 1) goToStep(i + 1);
+      if (e.key === 'ArrowLeft' && i > 0) goToStep(i - 1);
     });
 
     setActiveDot(0);

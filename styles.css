@@ -89,7 +89,7 @@ html.no-motion [data-reveal] {
   transform: none !important;
   transition: none !important;
 }
-html.no-motion .hero__phone { animation: none !important; }
+html.no-motion .hero__phone-wrap { animation: none !important; }
 
 /* =====================================================
    Header
@@ -406,18 +406,28 @@ html.no-motion .hero__phone { animation: none !important; }
   justify-content: center;
   align-items: center;
 }
-.hero__phone {
+/* Wrapper intentionally skips data-reveal: its opacity/transform breaks multiply blending.
+   Float uses margin (not transform) so we don’t create an isolated stacking context. */
+.hero__phone-wrap {
   width: 100%;
   max-width: 360px;
+  animation: hero-phone-float 6s ease-in-out infinite;
+}
+.hero__phone {
+  width: 100%;
   height: auto;
+  display: block;
   mix-blend-mode: multiply;
-  animation: float 6s ease-in-out infinite;
-  will-change: transform;
 }
 
 @keyframes float {
   0%, 100% { transform: translateY(0); }
   50%      { transform: translateY(-12px); }
+}
+
+@keyframes hero-phone-float {
+  0%, 100% { margin-top: 0; }
+  50%      { margin-top: -12px; }
 }
 
 /* =====================================================
@@ -758,8 +768,14 @@ html.no-motion .hero__phone { animation: none !important; }
     gap: 24px;
     text-align: center;
   }
-  .how__step--reverse .how__visual { order: 0; }
-  .how__step--reverse .how__copy { justify-self: center; }
+  /* Step number + copy above phone on narrow viewports */
+  .how__step .how__copy {
+    order: 1;
+    justify-self: center;
+  }
+  .how__step .how__visual {
+    order: 2;
+  }
   .how__copy { max-width: 520px; margin-inline: auto; }
   .how__visual img { max-width: 240px; }
   .how__visual-img--xl { max-width: 310px !important; }
@@ -1061,7 +1077,7 @@ html.no-motion .hero__phone { animation: none !important; }
 
 @media (max-width: 768px) {
   body { font-size: 16px; }
-  .hero__phone { max-width: 260px; }
+  .hero__phone-wrap { max-width: 260px; }
 }
 
 @media (max-width: 540px) {
