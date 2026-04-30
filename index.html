@@ -1,0 +1,359 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Chefcam.ai — Scan your fridge. Get recipes.</title>
+  <meta name="description" content="Chefcam.ai scans what's in your fridge, identifies your ingredients, and pulls real recipes from the best food sites — so you always know what to cook with what you have." />
+  <meta name="theme-color" content="#f6f6f7" />
+
+  <link rel="preconnect" href="https://api.fontshare.com" />
+  <link rel="preconnect" href="https://cdn.fontshare.com" crossorigin />
+  <link href="https://api.fontshare.com/v2/css?f[]=general-sans@300,400,500,600,700&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="styles.css" />
+
+  <!-- Reusable inline SVG sprite -->
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <defs>
+      <!-- Apple logo -->
+      <symbol id="i-apple" viewBox="0 0 24 24">
+        <path d="M16.36 12.79c-.03-2.91 2.38-4.31 2.49-4.38-1.36-1.99-3.48-2.27-4.23-2.3-1.8-.18-3.51 1.06-4.42 1.06-.92 0-2.32-1.03-3.81-1-1.96.03-3.77 1.14-4.78 2.9-2.04 3.53-.52 8.74 1.46 11.6.97 1.4 2.13 2.97 3.62 2.91 1.45-.06 2-.94 3.76-.94s2.25.94 3.79.91c1.57-.03 2.56-1.42 3.51-2.83 1.11-1.62 1.57-3.19 1.6-3.27-.04-.02-3.06-1.18-3.09-4.66zM13.5 4.5c.79-.96 1.33-2.3 1.18-3.62-1.14.05-2.52.76-3.34 1.72-.73.85-1.38 2.2-1.21 3.5 1.27.1 2.57-.65 3.37-1.6z" fill="currentColor"/>
+      </symbol>
+
+      <!-- Hamburger -->
+      <symbol id="i-menu" viewBox="0 0 24 24">
+        <path d="M4 7h16M4 12h16M4 17h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+      </symbol>
+      <symbol id="i-close" viewBox="0 0 24 24">
+        <path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+      </symbol>
+
+      <!-- Why-choose icons (line style, currentColor) -->
+      <symbol id="i-fridge" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="5" y="3" width="14" height="18" rx="3"/>
+        <path d="M5 10h14"/>
+        <path d="M8 6.5v1.5"/><path d="M8 13v3"/>
+      </symbol>
+      <symbol id="i-sparkles" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M12 3l1.6 4.4L18 9l-4.4 1.6L12 15l-1.6-4.4L6 9l4.4-1.6L12 3z"/>
+        <path d="M19 15l.7 1.8L21.5 17.5 19.7 18.2 19 20l-.7-1.8L16.5 17.5l1.8-.7L19 15z"/>
+      </symbol>
+      <symbol id="i-leaf" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M4 20c0-9 6-15 16-15-1 9-6 15-16 15z"/>
+        <path d="M4 20c4-4 8-7 14-11"/>
+      </symbol>
+    </defs>
+  </svg>
+</head>
+
+<body>
+  <!-- ============= HEADER ============= -->
+  <header class="site-header" id="siteHeader">
+    <div class="container header__row">
+      <a class="brand" href="#top" aria-label="Chefcam.ai home">
+        <img class="brand__mark" src="logo.png" alt="" aria-hidden="true" />
+        <span class="brand__name">Chefcam.ai</span>
+      </a>
+
+      <nav class="nav" aria-label="Primary">
+        <ul class="nav__list">
+          <li><a href="#top">Home</a></li>
+          <li><a href="features.html">Features</a></li>
+          <li><a href="faq.html">FAQ</a></li>
+          <li><a href="updates.html">Updates</a></li>
+        </ul>
+      </nav>
+
+      <div class="header__cta">
+        <a class="badge badge--sm" href="https://apps.apple.com/us/app/chefcam-ai/id6762315581" target="_blank" rel="noopener" aria-label="Download on the App Store">
+          <svg class="badge__icon" aria-hidden="true"><use href="#i-apple"/></svg>
+          <span class="badge__copy">
+            <span class="badge__small">Download on the</span>
+            <span class="badge__big">App Store</span>
+          </span>
+        </a>
+      </div>
+
+      <button class="nav__toggle" type="button" aria-controls="mobileNav" aria-expanded="false" aria-label="Open menu">
+        <svg class="nav__toggle-open" aria-hidden="true"><use href="#i-menu"/></svg>
+        <svg class="nav__toggle-close" aria-hidden="true"><use href="#i-close"/></svg>
+      </button>
+    </div>
+  </header>
+
+  <!-- Drawer lives outside header so position:fixed isn’t clipped by header/backdrop-filter -->
+  <div class="nav-drawer-backdrop" id="navDrawerBackdrop" aria-hidden="true"></div>
+  <div class="mobile-nav" id="mobileNav" role="dialog" aria-modal="true" aria-label="Site navigation" aria-hidden="true">
+    <ul>
+      <li><a href="#top">Home</a></li>
+      <li><a href="features.html">Features</a></li>
+      <li><a href="faq.html">FAQ</a></li>
+      <li><a href="updates.html">Updates</a></li>
+    </ul>
+  </div>
+
+  <main id="top">
+    <!-- ============= HERO ============= -->
+    <section class="hero">
+      <div class="container hero__grid">
+        <div class="hero__copy">
+          <div class="proof-pill" data-reveal data-reveal-delay="0">
+            <span class="proof-pill__avatars" aria-hidden="true">
+              <img src="assets/logos/allrecipes.png" alt="" width="26" height="26" loading="eager" decoding="async" />
+              <img src="assets/logos/epicurious.png" alt="" width="26" height="26" loading="eager" decoding="async" />
+              <img src="assets/logos/bonappetit.png" alt="" width="26" height="26" loading="eager" decoding="async" />
+            </span>
+            <span class="proof-pill__text">
+              Trusted recipe sites, matched to what’s in your fridge
+            </span>
+          </div>
+
+          <h1 class="hero__title" data-reveal data-reveal-delay="80">
+            Scan your fridge.<br/>
+            <span>Get recipes.</span>
+          </h1>
+
+          <p class="hero__lede" data-reveal data-reveal-delay="160">
+            Chefcam.ai scans what's in your fridge, identifies your ingredients, and pulls
+            real recipes from the best food sites — so you always know what to cook with
+            what you've got.
+          </p>
+
+          <div class="hero__cta" data-reveal data-reveal-delay="240">
+            <a class="badge badge--lg" href="https://apps.apple.com/us/app/chefcam-ai/id6762315581" target="_blank" rel="noopener" aria-label="Download on the App Store">
+              <svg class="badge__icon" aria-hidden="true"><use href="#i-apple"/></svg>
+              <span class="badge__copy">
+                <span class="badge__small">Download on the</span>
+                <span class="badge__big">App Store</span>
+              </span>
+            </a>
+          </div>
+        </div>
+
+        <div class="hero__visual">
+          <img class="hero__phone" src="hero.png" alt="Chefcam.ai app showing daily calorie summary and recent meal scans" data-reveal data-reveal-delay="120" />
+        </div>
+      </div>
+    </section>
+
+    <!-- ============= WHY CHOOSE ============= -->
+    <section class="why" id="why">
+      <div class="container">
+        <div class="why__head" data-reveal>
+          <h2>Why choose Chefcam.ai?</h2>
+          <p>Real recipes from your real ingredients — without the guesswork.</p>
+        </div>
+
+        <div class="why__grid">
+          <article class="why__card why__card--featured" data-reveal data-reveal-delay="0">
+            <span class="why__badge">What sets us apart</span>
+            <span class="why__icon"><svg aria-hidden="true"><use href="#i-sparkles"/></svg></span>
+            <h3>Top-tier recipe sources</h3>
+            <p>We pull tested recipes from trusted food sites — not generic AI-written instructions. Every result is something a real cook stands behind.</p>
+          </article>
+
+          <article class="why__card" data-reveal data-reveal-delay="100">
+            <span class="why__icon"><svg aria-hidden="true"><use href="#i-fridge"/></svg></span>
+            <h3>Cook with what you have</h3>
+            <p>Skip the grocery run. Chefcam scans your fridge, identifies your ingredients, and matches them to recipes you can actually make tonight.</p>
+          </article>
+
+          <article class="why__card" data-reveal data-reveal-delay="200">
+            <span class="why__icon"><svg aria-hidden="true"><use href="#i-leaf"/></svg></span>
+            <h3>Waste less, save more</h3>
+            <p>Surface ideas for the ingredients about to go bad. Eat better, throw out less, and stop letting groceries go to waste at the back of the shelf.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============= SOURCES MARQUEE ============= -->
+    <section class="sources" aria-label="Recipe sources">
+      <p class="sources__eyebrow">Recipes sourced from the best food sites</p>
+      <div class="marquee">
+        <div class="marquee__track">
+          <!-- Group A -->
+          <span class="marquee__brand">
+            <img class="marquee__logo" src="assets/logos/foodnetwork.png" alt="" width="40" height="40" loading="lazy" decoding="async" />
+            <span class="marquee__item">Food Network</span>
+          </span>
+          <span class="marquee__sep" aria-hidden="true">•</span>
+          <span class="marquee__brand">
+            <img class="marquee__logo" src="assets/logos/natashaskitchen.png" alt="" width="40" height="40" loading="lazy" decoding="async" />
+            <span class="marquee__item">Natasha's Kitchen</span>
+          </span>
+          <span class="marquee__sep" aria-hidden="true">•</span>
+          <span class="marquee__brand">
+            <img class="marquee__logo" src="assets/logos/delish.png" alt="" width="40" height="40" loading="lazy" decoding="async" />
+            <span class="marquee__item">Delish</span>
+          </span>
+          <span class="marquee__sep" aria-hidden="true">•</span>
+          <span class="marquee__brand">
+            <img class="marquee__logo" src="assets/logos/epicurious.png" alt="" width="40" height="40" loading="lazy" decoding="async" />
+            <span class="marquee__item">Epicurious</span>
+          </span>
+          <span class="marquee__sep" aria-hidden="true">•</span>
+          <span class="marquee__brand">
+            <img class="marquee__logo" src="assets/logos/bonappetit.png" alt="" width="40" height="40" loading="lazy" decoding="async" />
+            <span class="marquee__item">Bon Appétit</span>
+          </span>
+          <span class="marquee__sep" aria-hidden="true">•</span>
+          <span class="marquee__brand">
+            <img class="marquee__logo" src="assets/logos/allrecipes.png" alt="" width="40" height="40" loading="lazy" decoding="async" />
+            <span class="marquee__item">Allrecipes</span>
+          </span>
+          <span class="marquee__sep" aria-hidden="true">•</span>
+          <!-- Group B (duplicate for seamless loop) -->
+          <span class="marquee__brand" aria-hidden="true">
+            <img class="marquee__logo" src="assets/logos/foodnetwork.png" alt="" width="40" height="40" loading="lazy" decoding="async" />
+            <span class="marquee__item">Food Network</span>
+          </span>
+          <span class="marquee__sep" aria-hidden="true">•</span>
+          <span class="marquee__brand" aria-hidden="true">
+            <img class="marquee__logo" src="assets/logos/natashaskitchen.png" alt="" width="40" height="40" loading="lazy" decoding="async" />
+            <span class="marquee__item">Natasha's Kitchen</span>
+          </span>
+          <span class="marquee__sep" aria-hidden="true">•</span>
+          <span class="marquee__brand" aria-hidden="true">
+            <img class="marquee__logo" src="assets/logos/delish.png" alt="" width="40" height="40" loading="lazy" decoding="async" />
+            <span class="marquee__item">Delish</span>
+          </span>
+          <span class="marquee__sep" aria-hidden="true">•</span>
+          <span class="marquee__brand" aria-hidden="true">
+            <img class="marquee__logo" src="assets/logos/epicurious.png" alt="" width="40" height="40" loading="lazy" decoding="async" />
+            <span class="marquee__item">Epicurious</span>
+          </span>
+          <span class="marquee__sep" aria-hidden="true">•</span>
+          <span class="marquee__brand" aria-hidden="true">
+            <img class="marquee__logo" src="assets/logos/bonappetit.png" alt="" width="40" height="40" loading="lazy" decoding="async" />
+            <span class="marquee__item">Bon Appétit</span>
+          </span>
+          <span class="marquee__sep" aria-hidden="true">•</span>
+          <span class="marquee__brand" aria-hidden="true">
+            <img class="marquee__logo" src="assets/logos/allrecipes.png" alt="" width="40" height="40" loading="lazy" decoding="async" />
+            <span class="marquee__item">Allrecipes</span>
+          </span>
+          <span class="marquee__sep" aria-hidden="true">•</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============= HOW IT WORKS ============= -->
+    <section class="how" id="how">
+      <div class="container">
+        <div class="how__head" data-reveal>
+          <h2>From a full fridge to dinner — in four steps.</h2>
+          <p>No more staring into the fridge. No more "what do we have?" Chefcam handles it.</p>
+        </div>
+
+        <div class="how__carousel">
+          <div
+            class="how__steps"
+            id="howSteps"
+            tabindex="0"
+            role="region"
+            aria-roledescription="carousel"
+            aria-label="Four steps from fridge scan to cooking"
+          >
+            <div class="how__step">
+              <div class="how__visual">
+                <img src="step-1.png" alt="Chefcam ingredient confirmation screen showing detected items" loading="lazy" data-reveal />
+              </div>
+              <div class="how__copy" data-reveal data-reveal-delay="80">
+                <span class="how__num" aria-hidden="true">01</span>
+                <h3>Confirm your ingredients</h3>
+                <p>Chefcam scans your fridge and lists every ingredient it detected. Tap to remove anything that's wrong, or add what we missed — you stay in control of the list.</p>
+              </div>
+            </div>
+
+            <div class="how__step how__step--reverse">
+              <div class="how__visual">
+                <img src="step-2.png" alt="Chefcam matching ingredients to recipes loading screen" loading="lazy" data-reveal />
+              </div>
+              <div class="how__copy" data-reveal data-reveal-delay="80">
+                <span class="how__num" aria-hidden="true">02</span>
+                <h3>AI matches the right recipes</h3>
+                <p>Our model cross-references your exact ingredients against thousands of tested recipes from top food sites and ranks them by how well they fit what you have.</p>
+              </div>
+            </div>
+
+            <div class="how__step">
+              <div class="how__visual">
+                <img src="step-3.png" alt="Chefcam recipe results categorized by ingredient" loading="lazy" data-reveal />
+              </div>
+              <div class="how__copy" data-reveal data-reveal-delay="80">
+                <span class="how__num" aria-hidden="true">03</span>
+                <h3>Browse what's possible tonight</h3>
+                <p>See recipes sorted by match. A 100% match means you can cook it right now — no grocery run required. Filter by dish, prep time, or rating.</p>
+              </div>
+            </div>
+
+            <div class="how__step how__step--reverse">
+              <div class="how__visual">
+                <img class="how__visual-img--xl" src="step-4.png" alt="Full Chefcam recipe page with ingredients and health score" loading="lazy" data-reveal />
+              </div>
+              <div class="how__copy" data-reveal data-reveal-delay="80">
+                <span class="how__num" aria-hidden="true">04</span>
+                <h3>Open it and cook</h3>
+                <p>Tap any recipe for full step-by-step instructions, ingredient quantities, a health score, and a link back to the original source — so you always know who tested it.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="how__carousel-footer">
+            <div class="how__dots" role="group" aria-label="Choose a step">
+              <button type="button" class="how__dot is-active" data-how-step="0" aria-label="Step 1 of 4" aria-current="true"></button>
+              <button type="button" class="how__dot" data-how-step="1" aria-label="Step 2 of 4"></button>
+              <button type="button" class="how__dot" data-how-step="2" aria-label="Step 3 of 4"></button>
+              <button type="button" class="how__dot" data-how-step="3" aria-label="Step 4 of 4"></button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============= APP STORE CTA ============= -->
+    <section class="store-cta" aria-labelledby="store-cta-heading">
+      <div class="container store-cta__inner" data-reveal>
+        <h2 id="store-cta-heading">New on the App Store</h2>
+        <p class="store-cta__lede">
+          See what’s cooking in Chefcam — real recipes from trusted food sites, matched to what’s already in your fridge.
+        </p>
+        <p class="store-cta__note">
+          Help us grow: ratings and reviews will show up as more home cooks discover the app.
+        </p>
+      </div>
+    </section>
+  </main>
+
+  <!-- ============= FOOTER ============= -->
+  <footer class="footer">
+    <div class="container footer__grid">
+      <div class="footer__brand">
+        <a class="brand" href="#top" aria-label="Chefcam.ai home">
+          <img class="brand__mark" src="logo.png" alt="" aria-hidden="true" />
+          <span class="brand__name">Chefcam.ai</span>
+        </a>
+        <p class="footer__sub">Download Chefcam.ai</p>
+        <div class="footer__badges">
+          <a class="badge" href="https://apps.apple.com/us/app/chefcam-ai/id6762315581" target="_blank" rel="noopener" aria-label="Download on the App Store">
+            <svg class="badge__icon" aria-hidden="true"><use href="#i-apple"/></svg>
+            <span class="badge__copy"><span class="badge__small">Download on the</span><span class="badge__big">App Store</span></span>
+          </a>
+        </div>
+        <p class="footer__copy">© Copyright 2026, All rights reserved</p>
+      </div>
+
+      <div class="footer__col">
+        <h4>Legal</h4>
+        <ul>
+          <li><a href="https://www.freeprivacypolicy.com/live/72b47992-b70e-4396-b244-e549544ee71f" target="_blank" rel="noopener noreferrer">Privacy Policy</a></li>
+        </ul>
+      </div>
+    </div>
+  </footer>
+
+  <script src="script.js" defer></script>
+</body>
+</html>

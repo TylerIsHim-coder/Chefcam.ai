@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>FAQ — Chefcam.ai</title>
+  <meta name="description" content="Answers about scanning your fridge, recipe sources, privacy, and using Chefcam.ai." />
+  <meta name="theme-color" content="#f6f6f7" />
+
+  <link rel="preconnect" href="https://api.fontshare.com" />
+  <link rel="preconnect" href="https://cdn.fontshare.com" crossorigin />
+  <link href="https://api.fontshare.com/v2/css?f[]=general-sans@300,400,500,600,700&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="styles.css" />
+
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <defs>
+      <symbol id="i-apple" viewBox="0 0 24 24">
+        <path d="M16.36 12.79c-.03-2.91 2.38-4.31 2.49-4.38-1.36-1.99-3.48-2.27-4.23-2.3-1.8-.18-3.51 1.06-4.42 1.06-.92 0-2.32-1.03-3.81-1-1.96.03-3.77 1.14-4.78 2.9-2.04 3.53-.52 8.74 1.46 11.6.97 1.4 2.13 2.97 3.62 2.91 1.45-.06 2-.94 3.76-.94s2.25.94 3.79.91c1.57-.03 2.56-1.42 3.51-2.83 1.11-1.62 1.57-3.19 1.6-3.27-.04-.02-3.06-1.18-3.09-4.66zM13.5 4.5c.79-.96 1.33-2.3 1.18-3.62-1.14.05-2.52.76-3.34 1.72-.73.85-1.38 2.2-1.21 3.5 1.27.1 2.57-.65 3.37-1.6z" fill="currentColor"/>
+      </symbol>
+      <symbol id="i-menu" viewBox="0 0 24 24">
+        <path d="M4 7h16M4 12h16M4 17h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+      </symbol>
+      <symbol id="i-close" viewBox="0 0 24 24">
+        <path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+      </symbol>
+    </defs>
+  </svg>
+</head>
+
+<body>
+  <header class="site-header" id="siteHeader">
+    <div class="container header__row">
+      <a class="brand" href="index.html" aria-label="Chefcam.ai home">
+        <img class="brand__mark" src="logo.png" alt="" aria-hidden="true" />
+        <span class="brand__name">Chefcam.ai</span>
+      </a>
+
+      <nav class="nav" aria-label="Primary">
+        <ul class="nav__list">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="features.html">Features</a></li>
+          <li><a href="faq.html" aria-current="page">FAQ</a></li>
+          <li><a href="updates.html">Updates</a></li>
+        </ul>
+      </nav>
+
+      <div class="header__cta">
+        <a class="badge badge--sm" href="https://apps.apple.com/us/app/chefcam-ai/id6762315581" target="_blank" rel="noopener" aria-label="Download on the App Store">
+          <svg class="badge__icon" aria-hidden="true"><use href="#i-apple"/></svg>
+          <span class="badge__copy">
+            <span class="badge__small">Download on the</span>
+            <span class="badge__big">App Store</span>
+          </span>
+        </a>
+      </div>
+
+      <button class="nav__toggle" type="button" aria-controls="mobileNav" aria-expanded="false" aria-label="Open menu">
+        <svg class="nav__toggle-open" aria-hidden="true"><use href="#i-menu"/></svg>
+        <svg class="nav__toggle-close" aria-hidden="true"><use href="#i-close"/></svg>
+      </button>
+    </div>
+  </header>
+
+  <div class="nav-drawer-backdrop" id="navDrawerBackdrop" aria-hidden="true"></div>
+  <div class="mobile-nav" id="mobileNav" role="dialog" aria-modal="true" aria-label="Site navigation" aria-hidden="true">
+    <ul>
+      <li><a href="index.html">Home</a></li>
+      <li><a href="features.html">Features</a></li>
+      <li><a href="faq.html" aria-current="page">FAQ</a></li>
+      <li><a href="updates.html">Updates</a></li>
+    </ul>
+  </div>
+
+  <main id="top" class="faq-page">
+    <div class="container">
+      <header class="faq__head">
+        <h1>Frequently asked questions</h1>
+        <p class="faq__lede">Everything you need to know about scanning your fridge, finding recipes, and how Chefcam.ai fits into your kitchen routine.</p>
+      </header>
+
+      <div class="faq__list">
+        <details class="faq__item">
+          <summary>How does Chefcam scan my fridge?</summary>
+          <div class="faq__answer">
+            <p>You take a photo inside your fridge (or pantry). Chefcam uses on-device vision to recognize ingredients and build an editable list. You can tap to fix mistakes or add items we missed — you stay in control.</p>
+          </div>
+        </details>
+
+        <details class="faq__item">
+          <summary>Where do the recipes come from?</summary>
+          <div class="faq__answer">
+            <p>We match what you have to real recipes from trusted food sites and publishers — not generic AI-generated instructions. Each result links back to the original source so you know who developed and tested the dish.</p>
+          </div>
+        </details>
+
+        <details class="faq__item">
+          <summary>Is Chefcam.ai free?</summary>
+          <div class="faq__answer">
+            <p>You can download the app and explore core features on the App Store. Any subscription or in-app purchase options are shown clearly inside the app before you commit.</p>
+          </div>
+        </details>
+
+        <details class="faq__item">
+          <summary>Does Chefcam work without internet?</summary>
+          <div class="faq__answer">
+            <p>Some steps may require a connection to fetch recipes and sync your lists. Exact behavior can vary by version — check in-app settings or release notes for the latest.</p>
+          </div>
+        </details>
+
+        <details class="faq__item">
+          <summary>What happens to my photos and data?</summary>
+          <div class="faq__answer">
+            <p>We’re serious about privacy. How we collect, use, and store data is described in our Privacy Policy (linked in the site footer). If you have questions about your account or data, contact us through the channels listed there.</p>
+          </div>
+        </details>
+
+        <details class="faq__item">
+          <summary>Can Chefcam handle dietary restrictions?</summary>
+          <div class="faq__answer">
+            <p>The app helps you discover recipes that fit what’s in your fridge. Filters and preferences available in the app can help you narrow results — availability depends on the version you’re running.</p>
+          </div>
+        </details>
+      </div>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer__grid">
+      <div class="footer__brand">
+        <a class="brand" href="index.html" aria-label="Chefcam.ai home">
+          <img class="brand__mark" src="logo.png" alt="" aria-hidden="true" />
+          <span class="brand__name">Chefcam.ai</span>
+        </a>
+        <p class="footer__sub">Download Chefcam.ai</p>
+        <div class="footer__badges">
+          <a class="badge" href="https://apps.apple.com/us/app/chefcam-ai/id6762315581" target="_blank" rel="noopener" aria-label="Download on the App Store">
+            <svg class="badge__icon" aria-hidden="true"><use href="#i-apple"/></svg>
+            <span class="badge__copy"><span class="badge__small">Download on the</span><span class="badge__big">App Store</span></span>
+          </a>
+        </div>
+        <p class="footer__copy">© Copyright 2026, All rights reserved</p>
+      </div>
+
+      <div class="footer__col">
+        <h4>Legal</h4>
+        <ul>
+          <li><a href="https://www.freeprivacypolicy.com/live/72b47992-b70e-4396-b244-e549544ee71f" target="_blank" rel="noopener noreferrer">Privacy Policy</a></li>
+        </ul>
+      </div>
+    </div>
+  </footer>
+
+  <script src="script.js" defer></script>
+</body>
+</html>
