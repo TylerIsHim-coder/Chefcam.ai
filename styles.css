@@ -120,7 +120,7 @@ html.no-motion .hero__phone-wrap { animation: none !important; }
 .brand {
   display: inline-flex;
   align-items: center;
-  gap: 12px;
+  gap: 6px;
   color: var(--ink);
   font-weight: 700;
   letter-spacing: -0.01em;
@@ -406,8 +406,7 @@ html.no-motion .hero__phone-wrap { animation: none !important; }
   justify-content: center;
   align-items: center;
 }
-/* Wrapper intentionally skips data-reveal: its opacity/transform breaks multiply blending.
-   Float uses margin (not transform) so we don’t create an isolated stacking context. */
+/* Wrapper skips data-reveal (opacity/transform). Float uses margin, not transform. */
 .hero__phone-wrap {
   width: 100%;
   max-width: 360px;
@@ -417,7 +416,6 @@ html.no-motion .hero__phone-wrap { animation: none !important; }
   width: 100%;
   height: auto;
   display: block;
-  mix-blend-mode: multiply;
 }
 
 @keyframes float {
@@ -727,7 +725,6 @@ html.no-motion .hero__phone-wrap { animation: none !important; }
   width: 100%;
   max-width: 300px;
   height: auto;
-  mix-blend-mode: multiply;
 }
 .how__visual-img--xl {
   max-width: 430px !important;
